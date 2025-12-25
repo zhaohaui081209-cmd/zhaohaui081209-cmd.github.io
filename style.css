@@ -1,0 +1,704 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.page {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: block;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 登录页面样式 */
+#login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+}
+
+#login-page .container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    transition: transform 0.3s ease;
+}
+
+#login-page .container:hover {
+    transform: translateY(-5px);
+}
+
+#login-page h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #4CAF50;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    transform: translateY(-1px);
+}
+
+button {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+}
+
+.error {
+    color: #f44336;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* 主页面样式 */
+header {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 15px;
+    font-weight: 500;
+}
+
+#logout-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+    backdrop-filter: blur(10px);
+}
+
+#logout-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+nav {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    overflow-x: auto;
+}
+
+.nav-btn {
+    background-color: transparent;
+    color: #333;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.nav-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.nav-btn.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content {
+    display: none;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.content.active {
+    display: block;
+}
+
+/* 仪表盘样式 */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card span {
+    font-size: 36px;
+    font-weight: 700;
+    color: #4CAF50;
+    display: block;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* 拖放区域样式 */
+.drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 40px 20px;
+    margin: 20px 0;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.drop-area:hover {
+    border-color: #4CAF50;
+    background-color: #f0fff0;
+}
+
+.drop-area.dragover {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
+}
+
+.drop-area-content {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.drop-area-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.drop-area h3 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.drop-area p {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+#browse-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#browse-btn:hover {
+    background-color: #45a049;
+}
+
+/* 成员管理样式 */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.page-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+#add-member-form {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+#add-member-form:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    justify-content: flex-end;
+}
+
+.hidden {
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+table th {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+table tr:hover {
+    background-color: #f8fff8;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    margin-right: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+}
+
+/* 为签到管理页面的按钮添加不同的颜色 */
+.action-btn[onclick*="attendance"] {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+}
+
+.action-btn[onclick*="leave"] {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+}
+
+.action-btn[onclick*="absent"] {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+/* 取消签到按钮样式 */
+.cancel-btn {
+    background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(135deg, #757575 0%, #616161 100%);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(158, 158, 158, 0.4);
+}
+
+.cancel-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* 页面过渡动画 */
+.page {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 卡片和元素动画 */
+.card {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 表格行动画 */
+table tr {
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 按钮点击反馈 */
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* 导航按钮效果 */
+.nav-btn {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.nav-btn:hover::after {
+    width: 100%;
+}
+
+.nav-btn.active::after {
+    width: 100%;
+}
+
+/* 输入框动画效果 */
+.form-group input,
+.form-group select {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus::placeholder,
+.form-group select:focus::placeholder {
+    transform: translateY(-10px);
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+/* 加载效果 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(76, 175, 80, 0.3);
+    border-radius: 50%;
+    border-top-color: #4CAF50;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 签到管理样式 */
+.date-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 统计导出样式 */
+.date-range {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.export-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* 成员信息样式 */
+.member-details {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.detail-item {
+    margin-bottom: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.detail-item .label {
+    font-weight: 600;
+    margin-right: 15px;
+    color: #4CAF50;
+    min-width: 80px;
+    font-size: 15px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    #login-page .container {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .user-info {
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .date-range {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .export-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    table th,
+    table td {
+        padding: 8px;
+    }
+
+    .action-btn {
+        padding: 3px 6px;
+        font-size: 12px;
+        margin-right: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .card span {
+        font-size: 24px;
+    }
+
+    .date-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

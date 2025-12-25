@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>志愿活动签到系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 登录页面 -->
+    <div id="login-page" class="page active">
+        <div class="container">
+            <h1>志愿活动签到系统</h1>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="role">角色</label>
+                    <select id="role">
+                        <option value="admin">管理员</option>
+                        <option value="leader">负责人</option>
+                        <option value="member">成员</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" placeholder="请输入用户名">
+                </div>
+                <div class="form-group" id="password-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" placeholder="请输入密码">
+                </div>
+                <button id="login-btn">登录</button>
+                <div id="login-error" class="error"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主页面 -->
+    <div id="main-page" class="page">
+        <header>
+            <h1>志愿活动签到系统</h1>
+            <div class="user-info">
+                <span id="current-user"></span>
+                <button id="logout-btn">退出登录</button>
+            </div>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" data-page="dashboard">首页</button>
+            <button class="nav-btn" data-page="members" id="members-nav">成员管理</button>
+            <button class="nav-btn" data-page="attendance" id="attendance-nav">签到管理</button>
+            <button class="nav-btn" data-page="statistics" id="statistics-nav">统计导出</button>
+        </nav>
+
+        <main>
+            <!-- 仪表盘 -->
+            <div id="dashboard" class="content active">
+                <h2>今日签到情况</h2>
+                <div class="stats-cards">
+                    <div class="card">
+                        <h3>今日签到</h3>
+                        <span id="today-attendance">0</span>
+                    </div>
+                    <div class="card">
+                        <h3>今日请假</h3>
+                        <span id="today-leave">0</span>
+                    </div>
+                    <div class="card">
+                        <h3>今日旷课</h3>
+                        <span id="today-absent">0</span>
+                    </div>
+                    <div class="card">
+                        <h3>总课时</h3>
+                        <span id="total-hours">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 成员管理 -->
+            <div id="members" class="content">
+                <div class="page-header">
+                    <h2>成员管理</h2>
+                    <button id="add-member-btn">添加成员</button>
+                </div>
+                <div id="add-member-form" class="form hidden">
+                    <h3>添加新成员</h3>
+                    <div class="form-group">
+                        <label for="new-member-name">姓名</label>
+                        <input type="text" id="new-member-name" placeholder="请输入成员姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-member-id">学号/ID</label>
+                        <input type="text" id="new-member-id" placeholder="请输入学号或ID">
+                    </div>
+                    <div class="form-actions">
+                        <button id="save-member-btn">保存</button>
+                        <button id="cancel-member-btn">取消</button>
+                    </div>
+                </div>
+                
+                <!-- 拖放区域 -->
+                <div id="drop-area" class="drop-area">
+                    <div class="drop-area-content">
+                        <div class="drop-area-icon">📁</div>
+                        <h3>拖放表格文件到此处</h3>
+                        <p>支持 Excel (.xlsx) 或 CSV 文件，包含姓名和学号/ID 列</p>
+                        <input type="file" id="file-input" accept=".xlsx,.csv" style="display: none;">
+                        <button id="browse-btn">浏览文件</button>
+                    </div>
+                </div>
+                
+                <table id="members-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>学号/ID</th>
+                            <th>课时</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="members-list"></tbody>
+                </table>
+            </div>
+
+            <!-- 签到管理 -->
+            <div id="attendance" class="content">
+                <div class="page-header">
+                    <h2>签到管理</h2>
+                    <div class="date-selector">
+                        <label for="attendance-date">日期</label>
+                        <input type="date" id="attendance-date">
+                    </div>
+                </div>
+                <table id="attendance-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>学号/ID</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendance-list"></tbody>
+                </table>
+            </div>
+
+            <!-- 统计导出 -->
+            <div id="statistics" class="content">
+                <h2>统计导出</h2>
+                <div class="date-range">
+                    <div class="form-group">
+                        <label for="start-date">开始日期</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date">结束日期</label>
+                        <input type="date" id="end-date">
+                    </div>
+                </div>
+                <div class="export-actions">
+                    <button id="export-btn">导出表格</button>
+                    <button id="summary-btn">生成今日总结</button>
+                </div>
+                <div id="statistics-result"></div>
+            </div>
+
+            <!-- 成员个人信息 -->
+            <div id="member-info" class="content">
+                <h2>个人信息</h2>
+                <div class="member-details">
+                    <div class="detail-item">
+                        <span class="label">姓名:</span>
+                        <span id="member-name"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">学号/ID:</span>
+                        <span id="member-id"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">总课时:</span>
+                        <span id="member-hours"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">签到次数:</span>
+                        <span id="member-attendance"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">请假次数:</span>
+                        <span id="member-leave"></span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="label">旷课次数:</span>
+                        <span id="member-absent"></span>
+                    </div>
+                </div>
+                <h3>签到记录</h3>
+                <table id="member-records">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>状态</th>
+                        </tr>
+                    </thead>
+                    <tbody id="member-records-list"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- 引入SheetJS库用于解析Excel文件 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
