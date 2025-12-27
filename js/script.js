@@ -8,7 +8,7 @@ function initData() {
     let users = {};
     if (!localStorage.getItem('users')) {
         users = {
-            '赵广仁': { password: '081209', role: 'admin', name: '管理员' },
+            '赵广仁': { password: 'zgr081209', role: 'admin', name: '管理员' },
             '负责人': { password: 'leader123', role: 'leader', name: '负责人' }
         };
         localStorage.setItem('users', JSON.stringify(users));
